@@ -1,0 +1,65 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+.wrapper {
+    background: url(resources/background.jpg) no-repeat;
+    background-size: cover;
+    height: 100vh;
+}
+
+.wrapper .center {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: Lato;
+    color: white;
+    border-style: solid;
+}
+
+.center h1 {
+    /* color: white; */
+    font-size: 50px;
+    font-weight: bold;
+    width: 900px;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+label {
+    font-size: 20px;
+}
+
+form {
+    /* font-size: 20px; */
+    padding-left: 10px;
+}
+
+input[type=text] {
+    width: 20%;
+    padding: 12px 10x;
+    margin: 8px 0;
+    box-sizing: border-box;
+    transition: width 0.4s ease-in-out;
+}
+
+input[type=text]:focus {
+    width: 80%;
+}
+
+input[type=radio] {
+    font-size: 15px;
+    padding-left: 30px;    
+}
+
+form input[type=submit] {
+    border: 2px solid white;
+    padding: 5px 20px;
+    color: white;
+    background: transparent;
+    text-decoration: none;
+    cursor: pointer;
+
+}
