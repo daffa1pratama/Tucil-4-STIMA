@@ -27,6 +27,14 @@
             <input type="submit" name="submit" value="Submit"></button>
         </form>
         <label for=""> Result : <br></label>
+        <?php 
+            $fileName = $_GET['filename'];
+            $keyword = $_GET['keyword'];
+            $algoritma = $_GET['algoritma'];
+            $command = escapeshellcmd("main.py ".$fileName." ".$keyword." ".$algoritma);
+            $output = shell_exec($command);
+            echo $output;
+        ?>
     </div>
 </body>
 </html>

@@ -11,9 +11,16 @@ import sys
 #         self.algoritma = algoritma
     # text = textReader('../test/jabar11042020.txt').readText()
     # print(text)
+# pattern = "abacab"
+# filename = sys.argv[1]
+# f = textReader("uploaded/" + filename).readText()
+# print(text)
 text = "abacaabaccabacabaabb"
-pattern = "abacab"
-algoritma = sys.argv[1]
+pattern = sys.argv[2]
+algoritma = sys.argv[3]
+# print(f)
+# algoritma = sys.argv[1]
+# algoritma = "boyermoore"
     # kmp = kmp(pattern, text)
     # failure = kmp.failureFunction()
     # print(failure)
@@ -32,12 +39,14 @@ algoritma = sys.argv[1]
 
 
 if (algoritma == "boyermoore") :
-    bm = boyermoore(pattern, text)
-    last = bm.lastOccuranceFunction() 
-    matchx = bm.matchBoyerMoore()
-    print(matchx)
+    bm = boyermoore(pattern, text).matchBoyerMoore()
+    print(bm)
+elif (algoritma == "kmp") :
+    kmp = kmp(pattern, text).matchKMP()
+    print(kmp)
 else :
-    print("BLOM ADA")
+    regex = regex(pattern, text).matchRegex()
+    print(regex)
 
 # if __name__ == '__main__':
 #     main("abacab", "abacaabaccabacabaabb", sys.argv[1])

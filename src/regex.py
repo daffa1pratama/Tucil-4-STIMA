@@ -7,4 +7,6 @@ class regex :
 
     def matchRegex(self) :
         x = re.search(self.pattern, self.text)
-        return x.start()
+        if (x != none) :
+            return x.start()
+        return -1

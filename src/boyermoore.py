@@ -2,17 +2,18 @@ class boyermoore :
     def __init__ (self, pattern, text) :
         self.text = text
         self.pattern = pattern
-        self.lastOccurance = [-1]*256
 
     def lastOccuranceFunction (self) :
+        lastOccurance = [-1]*256
         for i in range (len(self.pattern)) :
-            self.lastOccurance[ord(self.pattern[i])] = i
-        return self.lastOccurance
+            lastOccurance[ord(self.pattern[i])] = i
+        return lastOccurance
 
     def matchBoyerMoore (self) :
         m = len(self.pattern)
         n = len(self.text)
         i = m - 1
+        lastOccurance = self.lastOccuranceFunction()
 
         if (i > (n - 1)) :
             return -1
@@ -26,7 +27,7 @@ class boyermoore :
                     i -= 1
                     j -= 1
             else :
-                lo = self.lastOccurance[ord(self.text[i])]
+                lo = lastOccurance[ord(self.text[i])]
                 i = i + m - min(j, lo + 1)
                 j = m - 1
         
