@@ -1,6 +1,6 @@
 import re
 
-class regex :
+class ruegex :
     def __init__(self, pattern, text) :
         self.pattern = pattern
         self.text = text

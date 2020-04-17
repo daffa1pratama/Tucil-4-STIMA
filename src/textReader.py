@@ -5,5 +5,7 @@ class textReader :
 
     def readText(self) :
         f = open(self.filepath, 'r')
-        self.stream = f.readlines()
+        temp = f.readlines()
+        for i in range(len(temp)) :
+            self.stream.append(temp[i].strip("\n"))
         return self.stream
