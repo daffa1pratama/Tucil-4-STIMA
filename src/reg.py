@@ -1,12 +1,11 @@
 import re
 
-class regex :
-    def __init__(self, pattern, text) :
-        self.pattern = pattern
-        self.text = text
+class reg :
+    def __init__(self) :
+        pass
 
-    def matchRegex(self) :
-        x = re.search(self.pattern, self.text)
-        if (x != none) :
+    def match(self, text, pattern) :
+        x = re.search(pattern, text)
+        if (x != None) :
             return x.start()
         return -1

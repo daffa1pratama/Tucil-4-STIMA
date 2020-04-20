@@ -34,7 +34,7 @@ print(keywordContainer)
 # dd-mm-yyyy or dd/mm/yyyy = (([1-9]|1[0-9]|2[0-9]|3[0-1])(\/|-)([1-9]|1[0-2])(\/|-|)([0-9]{0,4}))
 # dd nama yyyy = (([1-9]|1[0-9]|2[0-9]|3[0-1]) (Jan(?:uari)?|Feb(?:uary)?|Mar(?:et)?|Apr(?:il)?|Mei|Jun(?:i)?|Jul(?:i)?|Agu(?:stus)?|Ags|Sep(?:tember)?|Okt(?:ober)?|Nov(?:ember)?|Des(?:ember)?) ([0-9]{0,4}))
 
-# DAY : 
+# DAY : ()
 
 # TIME :
 # hh:mm = ^(([01]\d|2[0-3]):([0-5]\d)|24:00)$

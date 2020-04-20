@@ -1,16 +1,15 @@
 class kmp :
-    def __init__(self, pattern, text):
-        self.pattern = pattern
-        self.text = text
+    def __init__(self):
+        pass
 
-    def failureFunction(self) :
-        failure = [0] * len(self.pattern)
-        m = len(self.pattern)
+    def failureFunction(self, pattern) :
+        failure = [0] * len(pattern)
+        m = len(pattern)
         i = 1
         j = 0
 
         while (i < m) :
-            if (self.pattern[i] == self.pattern[j]) :
+            if (pattern[i] == pattern[j]) :
                 failure[i] = j + 1
                 i += 1
                 j += 1
@@ -21,15 +20,15 @@ class kmp :
                 i += 1
         return failure
 
-    def matchKMP(self) :
-        m = len(self.pattern)
-        n = len(self.text)
+    def match(self, text, pattern) :
+        m = len(pattern)
+        n = len(text)
         i = 0
         j = 0
-        failure = self.failureFunction()
+        failure = self.failureFunction(pattern)
 
         while (i < n) :
-            if (self.text[i] == self.pattern[j]) :
+            if (text[i] == pattern[j]) :
                 if (j == (m - 1)) :
                     return i - m + 1
                 i += 1

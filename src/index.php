@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KMP Matcher</title>
+    <title>Extractor</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -30,11 +30,16 @@
             </form>
             <label for=""> Result : <br></label>
             <?php 
-                if (isset($_POST['submit'])) {
+                // echo $_GET['s'];
+                if (!$_GET) {
+                    echo "LALA";
+                }
+                else if (($_GET['s'])==='success') {
                     $fileName = $_GET['filename'];
                     $keyword = $_GET['keyword'];
                     $algoritma = $_GET['algoritma'];
-                    $command = escapeshellcmd("main.py ".$fileName." ".$keyword." ".$algoritma);
+                    $command = escapeshellcmd("python main.py ".$fileName." ".$keyword." ".$algoritma);
+                    // $command = escapeshellcmd('main.py');
                     $output = shell_exec($command);
                     echo $output;
                 }
