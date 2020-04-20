@@ -10,7 +10,7 @@ import sys
 # pattern = sys.argv[2]
 # algoritma = sys.argv[3]
 filename = "jabar11042020.txt"
-pattern = "positif"
+pattern = "covid"
 algoritma = "boyermoore"
 sentenceContainer = []
 date = []
@@ -48,7 +48,7 @@ queryDay = "(senin|selasa|rabu|kamis|jumat|sabtu|minggu)"
 queryTime = "^(wib|wita|wit)"
 
 # Print result (bold)
-for text in sentenceContainer :
+for row in sentenceContainer :
     # if (alg.match(text, pattern) != -1) :
     # temp = re.findall(queryDay, text)
     # print(temp)
@@ -58,45 +58,61 @@ for text in sentenceContainer :
         # text.replace(res, '<b>'+res+'<b>')
     # text = text.replace(pattern, '<b>'+pattern+'</b>')
     subsSentence = []
-    text = text.split(' ')
-    for sub in text :
+    row = row.split(' ')
+    for sub in row :
         subsSentence.append(sub)
     newContainer.append(subsSentence)
     # print(subsSentence, end='<br>')
     # print(text, end='<br>')
 
-# print(newContainer, end='<br>')
 for row in newContainer :
-    # print(row, end='<br>')
     i = 0
-    temp = []
+    dateTemp = []
+    numberTemp = []
     while i < (len(row)) :
         if (re.match(queryNumber, row[i])) :
             # Case date
             if (re.match(queryMonth, row[i+1]) and re.match(queryNumber, row[i+2])) :
-                temp.append(row[i] + ' ' + row[i+1] + ' ' + row[i+2])
+                dateTemp.append(row[i] + ' ' + row[i+1] + ' ' + row[i+2])
                 i += 2
             # Case time
             elif (re.match(queryTime, row[i+1])) :
-                temp.append(row[i] + ' ' + row[i+1])
+                dateTemp.append(row[i] + ' ' + row[i+1])
             # Case number
             else :
-                number.append(row[i])
+                numberTemp.append(row[i])
         # Case day
         elif (re.match(queryDay, row[i])) :
-            temp.append(row[i])
+            dateTemp.append(row[i])
         # Case date
         elif (re.match(queryDate, row[i])) :
-            print("ini brow")
-            print(row[i])
-            temp.append(row[i])
+            dateTemp.append(row[i])
 
         i = i + 1
-    date.append(temp)
-        # print(row[i], end='<br>')
-        # temp = re.findall(queryNumber, row)
-        # for res in temp :
-        #     number.append(res)
+    date.append(dateTemp)
+    number.append(numberTemp)
 
-print(number)
-print(date)
+# Get news date
+for row in date :
+    if (len(row) != 0) :
+        newsDate = row
+        break
+
+# RESULT
+for i in range (len(sentenceContainer)) :
+    if (alg.match(sentenceContainer[i], pattern) != -1) :
+        print("TEKS : ", end="")
+        print(sentenceContainer[i])
+        print("TANGGAL : ", end="")
+        if (len(date[i]) != 0) :
+            print(date[i])
+        else :
+            print(newsDate)
+        print("JUMLAH : ", end="")
+        if (len(number[i]) != 0) :
+            print(number[i])
+        else :
+            print("-")
+        print("===================")
+# print(number)
+# print(date)
