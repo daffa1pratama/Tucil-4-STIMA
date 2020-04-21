@@ -5,17 +5,32 @@ from reg import *
 from nltk import tokenize
 import sys
 
+def searchIndex(pattern, text) :
+    pat = pattern.split(' ')
+    for i in range(len(text)) :
+        same = False
+        if (pat[0] == text[i]) :
+            j = 1
+            while (j < len(pat)) :
+                if (pat[j] != text[i+j]) :
+                    return -1
+                j += 1
+            same = True
+        if (same) :
+            return i
+    return -1
+
 # Init
 # filename = sys.argv[1]
 # pattern = sys.argv[2]
 # algoritma = sys.argv[3]
 filename = "jabar11042020.txt"
-pattern = "covid"
-algoritma = "boyermoore"
+pattern = "terkonfirmasi positif"
+algoritma = "kmp"
 sentenceContainer = []
+newContainer = []
 date = []
 number = []
-newContainer = []
 
 # Load text
 f = textReader("uploaded/" + filename).readText()
@@ -38,7 +53,7 @@ elif (algoritma == "kmp") :
 else :
     alg = reg()
 
-queryNumber = "^([0-9]+[.,:]?[0-9]*)$"
+queryNumber = "^([0-9]+([\.,:]?[0-9]*)*)$"
 # queryDate = "(([1-9]|1[0-9]|2[0-9]|3[0-1]) (jan(?:uari)?|feb(?:uary)?|mar(?:et)?|apr(?:il)?|mei|jun(?:i)?|jul(?:i)?|agu(?:stus)?|ags|sep(?:tember)?|okt(?:ober)?|nov(?:ember)?|des(?:ember)?) ([0-9]{0,4}))"
 queryDate = ".?(([1-9]|1[0-9]|2[0-9]|3[0-1])(/|-)(0?[1-9]|1[0-2])(/|-|)([0-9]{0,4})).?"
 queryMonth = "^(jan(?:uari)?|feb(?:uary)?|mar(?:et)?|apr(?:il)?|mei|jun(?:i)?|jul(?:i)?|agu(?:stus)?|ags|sep(?:tember)?|okt(?:ober)?|nov(?:ember)?|des(?:ember)?)"
@@ -92,15 +107,61 @@ for row in newContainer :
     date.append(dateTemp)
     number.append(numberTemp)
 
+# Construct date
+for i in range(len(date)) :
+    temp = ''
+    dateSize = len(date[i])
+    for j in range(dateSize) :
+        temp += date[i].pop(0)
+        if (j != dateSize-1) :
+            temp += ' '
+    date[i] = temp
+
 # Get news date
 for row in date :
     if (len(row) != 0) :
         newsDate = row
         break
 
+# Nearest number
+# for i in range(len(newContainer)) :
+#     patternIdx = searchIndex(pattern, newContainer[i])
+#     # print("PATTERN IDX : ", end="")
+#     # print(patternIdx)
+#     numberIdx = []
+#     # dateIdx = []
+#     tempNum = number[i].copy()
+#     # tempDate = date[i].copy()
+#     for word in newContainer[i] :
+#         if (word in tempNum) :
+#             num = tempNum.pop(0)
+#             # print(num)
+#             numberIdx.append(abs(searchIndex(num, newContainer[i]) - patternIdx))
+#         # if (word in)
+#     # print("NUMBER IDX : ", end="")
+#     # print(numberIdx)
+#     if (len(numberIdx) != 0) :
+#         nearest = min(numberIdx)
+#         index = numberIdx.index(nearest)
+        # print(index)
+    # if (len(number[i]) != 0) :
+        # print(number[i][index])
+    # print("===================")
+
 # RESULT
 for i in range (len(sentenceContainer)) :
     if (alg.match(sentenceContainer[i], pattern) != -1) :
+        patternIdx = searchIndex(pattern, newContainer[i])
+        numberIdx = []
+        tempNum = number[i].copy()
+        for word in newContainer[i] :
+            if (word in tempNum) :
+                num = tempNum.pop(0)
+                numberIdx.append(abs(searchIndex(num, newContainer[i]) - patternIdx))
+        if (len(numberIdx) != 0) :
+            nearest = min(numberIdx)
+            index = numberIdx.index(nearest)
+
         print("TEKS : ", end="")
         print(sentenceContainer[i])
         print("TANGGAL : ", end="")
@@ -110,9 +171,7 @@ for i in range (len(sentenceContainer)) :
             print(newsDate)
         print("JUMLAH : ", end="")
         if (len(number[i]) != 0) :
-            print(number[i])
+            print(number[i][index])
         else :
             print("-")
         print("===================")
-# print(number)
-# print(date)
