@@ -11,7 +11,6 @@
         <div class="center">
         <!-- PAGE TITLE -->
             <h1> My InfoExtraction App </h1>
-
             <form action="submit.php" method="post" enctype="multipart/form-data">
                 <!-- SELECT FOLDER -->
                 <label for="file"> Folder : </label>
@@ -29,21 +28,23 @@
                 <input type="submit" name="submit" value="Submit"></button>
             </form>
             <label for=""> Result : <br></label>
-            <?php 
-                // echo $_GET['s'];
-                if (!$_GET) {
-                    echo "LALA";
-                }
-                else if (($_GET['s'])==='success') {
-                    $fileName = $_GET['filename'];
-                    $keyword = $_GET['keyword'];
-                    $algoritma = $_GET['algoritma'];
-                    $command = escapeshellcmd("python main.py ".$fileName." ".$keyword." ".$algoritma);
-                    // $command = escapeshellcmd('main.py');
-                    $output = shell_exec($command);
-                    echo $output;
-                }
-            ?>
+            <div class="result">
+                <?php 
+                    // echo $_GET['s'];
+                    if (!$_GET) {
+                        echo "LALA";
+                    }
+                    else if (($_GET['s'])==='success') {
+                        $fileName = $_GET['filename'];
+                        $keyword = $_GET['keyword'];
+                        $algoritma = $_GET['algoritma'];
+                        $command = escapeshellcmd("python main.py ".$fileName." ".$keyword." ".$algoritma);
+                        // $command = escapeshellcmd('main.py');
+                        $output = shell_exec($command);
+                        echo $output;
+                    }
+                ?>
+            </div>
         </div>
     </div>
 </body>

@@ -1,6 +1,6 @@
 # from textReader import *
 # from nltk import tokenize
-# import re
+import re
 
 # sentenceContainer = []
 # keywordContainer = []
@@ -40,8 +40,16 @@
 # # hh:mm = ^(([01]\d|2[0-3]):([0-5]\d)|24:00)$
 # # NUMBERS : ([0-9]+[.,]?[0-9]*)
 
-a = [1,2,3,4]
-b = a.copy()
-b.pop(0)
-print(a)
-print(b)
+# queryTime = "(([01]\d|2[0-3]):([0-5]\d)|24:00)"
+# queryTime = "((([0]?[1-9]|1[0-9]|2[0-4])(:|\.)[0-5][0-9]((:|\.)[0-5][0-9])?( )?(wib|wita|wit))|(([0]?[0-9]|1[0-9]|2[0-3])(:|\.)[0-5][0-9]((:|\.)[0-5][0-9])?))"
+# queryDate = "(([1-9]|1[0-9]|2[0-9]|3[0-1]) (jan(?:uari)?|feb(?:uary)?|mar(?:et)?|apr(?:il)?|mei|jun(?:i)?|jul(?:i)?|agu(?:stus)?|ags|sep(?:tember)?|okt(?:ober)?|nov(?:ember)?|des(?:ember)?) ([0-9]{0,4}))"
+
+# queryMonth = "(jan(?:uari)?|feb(?:ruari)?|mar(?:et)?|apr(?:il)?|mei|jun(?:i)?|jul(?:i)?|agu(?:stus)|ags|sep(?:tember)?|okt(?:ober)?|nov(?:ember)?|des(?:ember)?)"
+queryMonth = "(januari|februari|maret|april|mei|juni|juli|agustus|september|oktober|november|desember|jan|feb|mar|apr|jun|jul|ags|agu|sep|okt|nov|des)"
+# queryMonth = "januari|jan"
+if (re.search(queryMonth, 'april')) :
+    print("HOP")
+if (re.match(queryMonth, 'april')) :
+    print("WES")
+# print(re.match(queryMonth, 'april').group())
+print(re.findall(queryMonth, 'april'))

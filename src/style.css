@@ -3,6 +3,7 @@
     margin: 0;
 }
 
+
 .wrapper {
     background: url(resources/background.jpg) no-repeat;
     background-size: cover;
@@ -17,7 +18,8 @@
     font-family: Lato;
     color: black;
     border-style: solid;
-    background-color: white;
+    background-color: white;    
+    padding-left: 10px;
 }
 
 .center h1 {
@@ -35,7 +37,7 @@ label {
 
 form {
     /* font-size: 20px; */
-    padding-left: 10px;
+    /* padding-left: 10px; */
 }
 
 input[type=text] {
@@ -52,7 +54,7 @@ input[type=text]:focus {
 
 input[type=radio] {
     font-size: 15px;
-    padding-left: 30px;    
+    /* padding-left: 30px;     */
 }
 
 form input[type=submit] {
@@ -62,5 +64,9 @@ form input[type=submit] {
     background: transparent;
     text-decoration: none;
     cursor: pointer;
+}
 
+.result {
+    /* color: green; */
+    padding-right: 10px;
 }

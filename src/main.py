@@ -21,12 +21,12 @@ def searchIndex(pattern, text) :
     return -1
 
 # Init
-# filename = sys.argv[1]
-# pattern = sys.argv[2]
-# algoritma = sys.argv[3]
-filename = "jabar11042020.txt"
-pattern = "terkonfirmasi positif"
-algoritma = "kmp"
+filename = sys.argv[1]
+pattern = sys.argv[2]
+algoritma = sys.argv[3]
+# filename = "jabar11042020.txt"
+# pattern = "terkonfirmasi positif"
+# algoritma = "kmp"
 sentenceContainer = []
 newContainer = []
 date = []
@@ -39,12 +39,6 @@ for row in f :
     for text in temp :
         sentenceContainer.append(text.lower())
 
-# Print text
-print("============================")
-for i in range(len(sentenceContainer)) :
-    print(sentenceContainer[i])
-print("============================")
-
 # Select algorithm
 if (algoritma == "boyermoore") :
     alg = boyermoore()
@@ -54,58 +48,72 @@ else :
     alg = reg()
 
 queryNumber = "^([0-9]+([\.,:]?[0-9]*)*)$"
-# queryDate = "(([1-9]|1[0-9]|2[0-9]|3[0-1]) (jan(?:uari)?|feb(?:uary)?|mar(?:et)?|apr(?:il)?|mei|jun(?:i)?|jul(?:i)?|agu(?:stus)?|ags|sep(?:tember)?|okt(?:ober)?|nov(?:ember)?|des(?:ember)?) ([0-9]{0,4}))"
 queryDate = ".?(([1-9]|1[0-9]|2[0-9]|3[0-1])(/|-)(0?[1-9]|1[0-2])(/|-|)([0-9]{0,4})).?"
-queryMonth = "^(jan(?:uari)?|feb(?:uary)?|mar(?:et)?|apr(?:il)?|mei|jun(?:i)?|jul(?:i)?|agu(?:stus)?|ags|sep(?:tember)?|okt(?:ober)?|nov(?:ember)?|des(?:ember)?)"
-queryDay = "(senin|selasa|rabu|kamis|jumat|sabtu|minggu)"
-# queryTime = "(([01]\d|2[0-3]):([0-5]\d)|24:00)"
-# queryTime = "((([0]?[1-9]|1[0-9]|2[0-4])(:|\.)[0-5][0-9]((:|\.)[0-5][0-9])?( )?(wib|wita|wit))|(([0]?[0-9]|1[0-9]|2[0-3])(:|\.)[0-5][0-9]((:|\.)[0-5][0-9])?))"
+# queryMonth = "^(jan(?:uari)?|feb(?:uary)?|mar(?:et)?|apr(?:il)?|mei|jun(?:i)?|jul(?:i)?|agu(?:stus)?|ags|sep(?:tember)?|okt(?:ober)?|nov(?:ember)?|des(?:ember)?)"
+queryMonth = "^(januari|februari|maret|april|mei|juni|juli|agustus|september|oktober|november|desember|jan|feb|mar|apr|jun|jul|ags|sep|okt|nov|des)"
+queryDay = "\b(senin|selasa|rabu|kamis|jumat|sabtu|minggu)\b"
 queryTime = "^(wib|wita|wit)"
 
-# Print result (bold)
+# Sub sentence
 for row in sentenceContainer :
-    # if (alg.match(text, pattern) != -1) :
-    # temp = re.findall(queryDay, text)
-    # print(temp)
-    # for res in temp :
-        # print(res)
-        # text = text.replace(res, '<span style="color:blue">'+res+'</span>')
-        # text.replace(res, '<b>'+res+'<b>')
-    # text = text.replace(pattern, '<b>'+pattern+'</b>')
     subsSentence = []
     row = row.split(' ')
     for sub in row :
         subsSentence.append(sub)
     newContainer.append(subsSentence)
-    # print(subsSentence, end='<br>')
-    # print(text, end='<br>')
 
+# Extraction + Print text
+print("Filename : " + filename, end='<br>')
+print("===============================================", end='<br>')
 for row in newContainer :
     i = 0
     dateTemp = []
     numberTemp = []
+    res = ''
     while i < (len(row)) :
         if (re.match(queryNumber, row[i])) :
             # Case date
-            if (re.match(queryMonth, row[i+1]) and re.match(queryNumber, row[i+2])) :
-                dateTemp.append(row[i] + ' ' + row[i+1] + ' ' + row[i+2])
-                i += 2
+            if (re.match(queryMonth, row[i+1])) :
+                # Case month
+                if (re.match(queryNumber, row[i+2])) :
+                    dateTemp.append(row[i] + ' ' + row[i+1] + ' ' + row[i+2])
+                    res += '<span style="color: red">' + row[i] + ' ' + row[i+1] + ' ' + row[i+2] + '</span>' + ' '
+                    i += 2
+                # Case without month
+                else :
+                    dateTemp.append(row[i] + ' ' + row[i+1])
+                    res += '<span style="color: red">' + row[i] + ' ' + row[i+1] + '</span>' + ' '
+                    i += 1
             # Case time
             elif (re.match(queryTime, row[i+1])) :
                 dateTemp.append(row[i] + ' ' + row[i+1])
+                res += '<span style="color: red">' + row[i] + ' ' + row[i+1] + '</span>' + ' '
+                i += 1
             # Case number
             else :
                 numberTemp.append(row[i])
+                res += '<span style="color: blue">' + row[i] + '</span>' + ' '
+        # Case month only
+        elif (re.match(queryMonth, row[i])) :
+            print("INI C: " + row[i], end="<br>")
+            dateTemp.append(row[i])
+            res += '<span style="color: red">' + row[i] + '</span>' + ' '
         # Case day
         elif (re.match(queryDay, row[i])) :
             dateTemp.append(row[i])
+            res += '<span style="color: red">' + row[i] + '</span>' + ' '
         # Case date
         elif (re.match(queryDate, row[i])) :
             dateTemp.append(row[i])
-
+            res += '<span style="color: red">' + row[i] + '</span>' + ' '
+        # Another
+        else :
+            res += row[i] + ' '
         i = i + 1
     date.append(dateTemp)
     number.append(numberTemp)
+    print(res, end='<br>')
+print("===============================================", end='<br>')
 
 # Construct date
 for i in range(len(date)) :
@@ -148,7 +156,9 @@ for row in date :
         # print(number[i][index])
     # print("===================")
 
-# RESULT
+# Result + Print Result
+print("Keyword\t: " + pattern, end='<br>')
+print("Hasil ekstraksi informasi\t:", end='<br>')
 for i in range (len(sentenceContainer)) :
     if (alg.match(sentenceContainer[i], pattern) != -1) :
         patternIdx = searchIndex(pattern, newContainer[i])
@@ -161,17 +171,17 @@ for i in range (len(sentenceContainer)) :
         if (len(numberIdx) != 0) :
             nearest = min(numberIdx)
             index = numberIdx.index(nearest)
-
-        print("TEKS : ", end="")
-        print(sentenceContainer[i])
-        print("TANGGAL : ", end="")
-        if (len(date[i]) != 0) :
-            print(date[i])
-        else :
-            print(newsDate)
-        print("JUMLAH : ", end="")
+        print("Jumlah\t: ")
         if (len(number[i]) != 0) :
-            print(number[i][index])
+            print(number[i][index], end='<br>')
         else :
-            print("-")
-        print("===================")
+            print("-", end='<br>')
+        print("Tanggal\t: ")
+        if (len(date[i]) != 0) :
+            print(date[i], end='<br>')
+        else :
+            print(newsDate, end='<br>')
+        print(sentenceContainer[i], end='<br>')
+        print("===================", end='<br>')
+
+print(date)
