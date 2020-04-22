@@ -1,4 +1,4 @@
-class boyermoore :
+class bm :
     def __init__ (self) :
         pass
 

@@ -1,6 +1,6 @@
 from textReader import *
 from kmp import *
-from boyermoore import *
+from bm import *
 from reg import *
 from nltk import tokenize
 import sys
@@ -22,11 +22,16 @@ def searchIndex(pattern, text) :
 
 # Init
 filename = sys.argv[1]
-pattern = sys.argv[2]
-algoritma = sys.argv[3]
-# filename = "jabar11042020.txt"
-# pattern = "terkonfirmasi positif"
-# algoritma = "kmp"
+i = 2
+pattern = ""
+while (i < (len(sys.argv)-1)) :
+    pattern += sys.argv[i].lower() + " "
+    i += 1
+algoritma = sys.argv[i]
+# filename = "kompas2.txt"
+# pattern = "corona"
+# algoritma = "regex"
+
 sentenceContainer = []
 newContainer = []
 date = []
@@ -40,19 +45,18 @@ for row in f :
         sentenceContainer.append(text.lower())
 
 # Select algorithm
-if (algoritma == "boyermoore") :
-    alg = boyermoore()
+if (algoritma == "bm") :
+    alg = bm()
 elif (algoritma == "kmp") :
     alg = kmp()
 else :
     alg = reg()
 
-queryNumber = "^([0-9]+([\.,:]?[0-9]*)*)$"
-queryDate = ".?(([1-9]|1[0-9]|2[0-9]|3[0-1])(/|-)(0?[1-9]|1[0-2])(/|-|)([0-9]{0,4})).?"
-# queryMonth = "^(jan(?:uari)?|feb(?:uary)?|mar(?:et)?|apr(?:il)?|mei|jun(?:i)?|jul(?:i)?|agu(?:stus)?|ags|sep(?:tember)?|okt(?:ober)?|nov(?:ember)?|des(?:ember)?)"
-queryMonth = "^(januari|februari|maret|april|mei|juni|juli|agustus|september|oktober|november|desember|jan|feb|mar|apr|jun|jul|ags|sep|okt|nov|des)"
-queryDay = "\b(senin|selasa|rabu|kamis|jumat|sabtu|minggu)\b"
-queryTime = "^(wib|wita|wit)"
+queryNumber = r"^([0-9]+([\.,:]?[0-9]*)*)$"
+queryDate = r".?(([1-9]|1[0-9]|2[0-9]|3[0-1])(/|-)(0?[1-9]|1[0-2])(/|-|)([0-9]{0,4})).?"
+queryMonth = r"\b(januari|februari|maret|april|mei|juni|juli|agustus|september|oktober|november|desember|jan|feb|mar|apr|jun|jul|ags|sep|okt|nov|des)\b"
+queryDay = r"\b(senin|selasa|rabu|kamis|jumat|sabtu|minggu)\b"
+queryTime = r"^(wib|wita|wit|pm|am)"
 
 # Sub sentence
 for row in sentenceContainer :
@@ -64,7 +68,7 @@ for row in sentenceContainer :
 
 # Extraction + Print text
 print("Filename : " + filename, end='<br>')
-print("===============================================", end='<br>')
+print("=====================TEKS BERITA=====================", end='<br>')
 for row in newContainer :
     i = 0
     dateTemp = []
@@ -113,7 +117,6 @@ for row in newContainer :
     date.append(dateTemp)
     number.append(numberTemp)
     print(res, end='<br>')
-print("===============================================", end='<br>')
 
 # Construct date
 for i in range(len(date)) :
@@ -130,31 +133,7 @@ for row in date :
     if (len(row) != 0) :
         newsDate = row
         break
-
-# Nearest number
-# for i in range(len(newContainer)) :
-#     patternIdx = searchIndex(pattern, newContainer[i])
-#     # print("PATTERN IDX : ", end="")
-#     # print(patternIdx)
-#     numberIdx = []
-#     # dateIdx = []
-#     tempNum = number[i].copy()
-#     # tempDate = date[i].copy()
-#     for word in newContainer[i] :
-#         if (word in tempNum) :
-#             num = tempNum.pop(0)
-#             # print(num)
-#             numberIdx.append(abs(searchIndex(num, newContainer[i]) - patternIdx))
-#         # if (word in)
-#     # print("NUMBER IDX : ", end="")
-#     # print(numberIdx)
-#     if (len(numberIdx) != 0) :
-#         nearest = min(numberIdx)
-#         index = numberIdx.index(nearest)
-        # print(index)
-    # if (len(number[i]) != 0) :
-        # print(number[i][index])
-    # print("===================")
+print("===================HASIL EKSTRAKSI===================", end='<br>')
 
 # Result + Print Result
 print("Keyword\t: " + pattern, end='<br>')
@@ -182,6 +161,4 @@ for i in range (len(sentenceContainer)) :
         else :
             print(newsDate, end='<br>')
         print(sentenceContainer[i], end='<br>')
-        print("===================", end='<br>')
-
-print(date)
+        print("=====================================================", end='<br>')

@@ -45,11 +45,12 @@ import re
 # queryDate = "(([1-9]|1[0-9]|2[0-9]|3[0-1]) (jan(?:uari)?|feb(?:uary)?|mar(?:et)?|apr(?:il)?|mei|jun(?:i)?|jul(?:i)?|agu(?:stus)?|ags|sep(?:tember)?|okt(?:ober)?|nov(?:ember)?|des(?:ember)?) ([0-9]{0,4}))"
 
 # queryMonth = "(jan(?:uari)?|feb(?:ruari)?|mar(?:et)?|apr(?:il)?|mei|jun(?:i)?|jul(?:i)?|agu(?:stus)|ags|sep(?:tember)?|okt(?:ober)?|nov(?:ember)?|des(?:ember)?)"
-queryMonth = "(januari|februari|maret|april|mei|juni|juli|agustus|september|oktober|november|desember|jan|feb|mar|apr|jun|jul|ags|agu|sep|okt|nov|des)"
-# queryMonth = "januari|jan"
-if (re.search(queryMonth, 'april')) :
-    print("HOP")
-if (re.match(queryMonth, 'april')) :
-    print("WES")
-# print(re.match(queryMonth, 'april').group())
-print(re.findall(queryMonth, 'april'))
+queryMonth = r"\b(januari|februari|maret|april|mei|juni|juli|agustus|september|oktober|november|desember|jan|feb|mar|apr|jun|jul|ags|agu|sep|okt|nov|des)\b"
+# queryMonth = "\bjanuari|jan"
+# if (re.search(queryMonth, '11 jan')) :
+#     print("HOP")
+# if (re.match(queryMonth, '11 jan')) :
+#     print("WES")
+text = 'apri-12'
+print(re.match(queryMonth, text))
+print(re.findall(queryMonth, text))

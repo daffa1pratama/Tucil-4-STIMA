@@ -1,5 +1,4 @@
 <?php
-    echo "LALA";
     if (isset($_POST['submit'])) {
         $file = $_FILES['file'];
 
@@ -20,7 +19,6 @@
             'keyword' => $_POST['keyword'],
             'algoritma' => $_POST['algoritma']
         );
-        
         $query = http_build_query($query);
         header("Location: index.php?$query");
     }
