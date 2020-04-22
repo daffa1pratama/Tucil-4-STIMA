@@ -14,5 +14,5 @@ Prasyarat : sudah terinstall `Python` dan `Xampp` atau sejenisnya
 4. Selamat, Informator sudah berhasil dijalankan
 
 ## Referensi
-Slide Kuliah IF2211 Strategi Algoritma Pencocokan String
-Modul Praktikum NLP Regex
+1. Slide Kuliah IF2211 Strategi Algoritma Pencocokan String
+2. Modul Praktikum NLP Regex
